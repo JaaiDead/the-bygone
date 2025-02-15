@@ -12,6 +12,7 @@
   ],
   "client": [
     "client.BipedEntityModelMixin",
+    "client.ItemPropertiesMixin",
     "client.MixinHeldItemRenderer",
     "client.MixinItemRenderer",
     "client.MixinPlayerEntityRenderer"

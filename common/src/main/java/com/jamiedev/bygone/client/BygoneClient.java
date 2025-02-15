@@ -7,6 +7,7 @@ import com.jamiedev.bygone.client.particles.*;
 import com.jamiedev.bygone.client.renderer.*;
 import com.jamiedev.bygone.init.*;
 import com.jamiedev.bygone.items.VerdigrisBladeItem;
+import com.jamiedev.bygone.mixin.client.ItemPropertiesMixin;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.ParticleEngine;
@@ -144,7 +145,7 @@ public class BygoneClient {
     }
 
     public static void registerModelPredicateProviders() {
-        ItemProperties.register(JamiesModItems.HOOK, Bygone.id("deployed"), (itemStack, clientWorld, livingEntity, seed) -> {
+        ItemPropertiesMixin.invokeRegister(JamiesModItems.HOOK, Bygone.id("deployed"), (itemStack, clientWorld, livingEntity, seed) -> {
             if (livingEntity instanceof Player) {
                 for (InteractionHand value : InteractionHand.values())
                 {
@@ -161,7 +162,7 @@ public class BygoneClient {
             return 0;
         });
 
-        ItemProperties.register(JamiesModItems.VERDIGRIS_BLADE, Bygone.id("blocking"),
+        ItemPropertiesMixin.invokeRegister(JamiesModItems.VERDIGRIS_BLADE, Bygone.id("blocking"),
                 (itemStack, clientWorld, livingEntity, seed) -> {
                     if (livingEntity == null) return 0;
                     if (livingEntity instanceof Player && livingEntity.isBlocking()) return 1;
