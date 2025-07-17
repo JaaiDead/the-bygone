@@ -25,11 +25,7 @@ import net.minecraft.world.ticks.ContainerSingleItem;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AmphoraBlockEntity extends BlockEntity implements RandomizableContainer, ContainerSingleItem.BlockContainerSingleItem
-{
-    public static final String TAG_SHERDS = "sherds";
-    public static final String TAG_ITEM = "item";
-    public static final int EVENT_POT_WOBBLES = 1;
+public class AmphoraBlockEntity extends BlockEntity implements RandomizableContainer, ContainerSingleItem.BlockContainerSingleItem {
     public long wobbleStartedAtTick;
     @Nullable
     public AmphoraBlockEntity.WobbleStyle lastWobbleStyle;
@@ -48,9 +44,6 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         this.decorations.save(tag);
-        if (!this.trySaveLootTable(tag) && !this.item.isEmpty()) {
-            tag.put("item", this.item.save(registries));
-        }
 
     }
 
@@ -59,7 +52,7 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
         this.decorations = PotDecorations.load(tag);
         if (!this.tryLoadLootTable(tag)) {
             if (tag.contains("item", 10)) {
-                this.item = (ItemStack)ItemStack.parse(registries, tag.getCompound("item")).orElse(ItemStack.EMPTY);
+                this.item = (ItemStack) ItemStack.parse(registries, tag.getCompound("item")).orElse(ItemStack.EMPTY);
             } else {
                 this.item = ItemStack.EMPTY;
             }
@@ -76,7 +69,7 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
     }
 
     public Direction getDirection() {
-        return (Direction)this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
+        return (Direction) this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
     }
 
     public PotDecorations getDecorations() {
@@ -124,8 +117,8 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
 
     protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
-        this.decorations = (PotDecorations)componentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
-        this.item = ((ItemContainerContents)componentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)).copyOne();
+        this.decorations = (PotDecorations) componentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
+        this.item = ((ItemContainerContents) componentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)).copyOne();
     }
 
     public void removeComponentsFromTag(CompoundTag tag) {
@@ -135,12 +128,12 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
     }
 
     public ItemStack getTheItem() {
-        this.unpackLootTable((Player)null);
+        this.unpackLootTable((Player) null);
         return this.item;
     }
 
     public ItemStack splitTheItem(int amount) {
-        this.unpackLootTable((Player)null);
+        this.unpackLootTable((Player) null);
         ItemStack itemstack = this.item.split(amount);
         if (this.item.isEmpty()) {
             this.item = ItemStack.EMPTY;
@@ -150,7 +143,7 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
     }
 
     public void setTheItem(ItemStack item) {
-        this.unpackLootTable((Player)null);
+        this.unpackLootTable((Player) null);
         this.item = item;
     }
 
@@ -176,8 +169,7 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
     }
 
     public static enum WobbleStyle {
-        POSITIVE(7),
-        NEGATIVE(10);
+        POSITIVE(7), NEGATIVE(10);
 
         public final int duration;
 

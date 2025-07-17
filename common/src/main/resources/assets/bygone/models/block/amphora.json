@@ -11,6 +11,7 @@
       "name": "base",
       "from": [5, 0, 5],
       "to": [11, 27, 11],
+      "shade": false,
       "rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 5]},
       "faces": {
         "north": {"uv": [0, 0, 1.5, 6.75], "texture": "#0"},
@@ -25,6 +26,7 @@
       "name": "body",
       "from": [3, 2, 3],
       "to": [13, 12, 13],
+      "shade": false,
       "rotation": {"angle": 0, "axis": "y", "origin": [7, 2, 8]},
       "faces": {
         "north": {"uv": [6, 0, 8.5, 2.5], "texture": "#0"},
@@ -39,6 +41,7 @@
       "name": "wing1",
       "from": [0, 2, 8],
       "to": [3, 12, 8],
+      "shade": false,
       "rotation": {"angle": 0, "axis": "y", "origin": [1, 10, 6]},
       "faces": {
         "north": {"uv": [8.5, 1.5, 9.25, 4], "texture": "#0"},
@@ -53,6 +56,7 @@
       "name": "wing2",
       "from": [13, 2, 8],
       "to": [16, 12, 8],
+      "shade": false,
       "rotation": {"angle": 0, "axis": "y", "origin": [15, 10, 6]},
       "faces": {
         "north": {"uv": [9.25, 1.5, 8.5, 4], "texture": "#0"},

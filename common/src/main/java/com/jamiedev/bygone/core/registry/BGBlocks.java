@@ -32,7 +32,7 @@ import java.util.function.Supplier;
 import static net.minecraft.world.level.block.Blocks.DIRT;
 
 public class BGBlocks {
-Blocks ref;
+    Blocks ref;
     public static final Supplier<Block> POLISHED_BYSTONE = registerBlock("polished_bystone", () ->
             new Block(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_BROWN).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(0.8F)));
 
@@ -94,9 +94,8 @@ Blocks ref;
             new Block(BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.DEEPSLATE)));
 
 
-
-    public static final Supplier<Block> BYGONE_PORTAL =  registerBlockWithoutBlockItem("bygone_portal", () ->
-            new BygonePortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_PORTAL).lightLevel((state) -> 6).noLootTable().noCollission().strength(-1.0f,3600000.0f)) );
+    public static final Supplier<Block> BYGONE_PORTAL = registerBlockWithoutBlockItem("bygone_portal", () ->
+            new BygonePortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_PORTAL).lightLevel((state) -> 6).noLootTable().noCollission().strength(-1.0f, 3600000.0f)));
 
     public static final Supplier<Block> BYGONE_PORTAL_FRAME = registerBlockWithoutBlockItem("bygone_portal_frame", () ->
             new BygonePortalFrameBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1000000.8F)));
@@ -109,15 +108,15 @@ Blocks ref;
 
     public static final Supplier<Block> BYGONESTONE_IRON_ORE = registerBlock("bystone_iron_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
             BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F)));
-    public static final Supplier<Block>  BYGONESLATE_IRON_ORE = registerBlock("byslate_iron_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
+    public static final Supplier<Block> BYGONESLATE_IRON_ORE = registerBlock("byslate_iron_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
             BlockBehaviour.Properties.ofLegacyCopy(BYGONESTONE_IRON_ORE.get()).mapColor(MapColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
 
-    public static final Supplier<Block>  BYGONESTONE_COAL_ORE = registerBlock("bystone_coal_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
+    public static final Supplier<Block> BYGONESTONE_COAL_ORE = registerBlock("bystone_coal_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
             BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F)));
     public static final Supplier<Block> BYGONESLATE_COAL_ORE = registerBlock("byslate_coal_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
             BlockBehaviour.Properties.ofLegacyCopy(BYGONESTONE_COAL_ORE.get()).mapColor(MapColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
 
-    public static final Supplier<Block>  BYGONESTONE_COPPER_ORE = registerBlock("bystone_copper_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
+    public static final Supplier<Block> BYGONESTONE_COPPER_ORE = registerBlock("bystone_copper_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
             BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F)));
     public static final Supplier<Block> BYGONESLATE_COPPER_ORE = registerBlock("byslate_copper_ore", () -> new DropExperienceBlock(ConstantInt.of(0),
             BlockBehaviour.Properties.ofLegacyCopy(BYGONESTONE_COPPER_ORE.get()).mapColor(MapColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
@@ -149,7 +148,7 @@ Blocks ref;
 
     public static final Supplier<Block> COBBLED_BYSLATE_WALL = registerBlock("cobbled_byslate_wall", () ->
             new WallBlock(BlockBehaviour.Properties.ofFullCopy(BGBlocks.COBBLED_BYSLATE.get()).strength(2.0f)));
-    
+
     public static final Supplier<Block> CLOUD = registerBlock("cloud", () ->
             new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.QUARTZ).strength(0.001F).friction(0.989F)
                     .sound(SoundType.WOOL).noOcclusion().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never).isSuffocating(Blocks::never).isViewBlocking(Blocks::never)));
@@ -157,9 +156,9 @@ Blocks ref;
 
     // Start of the Ancient Forests unique Blocks
 
-    public static  final Supplier<Block> TALL_GRASS = registerBlockWithoutBlockItem("tall_grass", () -> new UpsidedownTallPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).
+    public static final Supplier<Block> TALL_GRASS = registerBlockWithoutBlockItem("tall_grass", () -> new UpsidedownTallPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).
             replaceable().noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-    public static  final Supplier<Block> SHORT_GRASS = registerBlock("under_grass", () -> new UpsidedownShortPlantBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> SHORT_GRASS = registerBlock("under_grass", () -> new UpsidedownShortPlantBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).replaceable().noCollission().instabreak().sound(SoundType.GRASS)
             .offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
 
@@ -171,27 +170,27 @@ Blocks ref;
             .mapColor(MapColor.PLANT).noCollission().lightLevel(CaveVines.emission(5)).instabreak().sound(SoundType.CAVE_VINES)
             .pushReaction(PushReaction.DESTROY)));
 
-    public static  final Supplier<Block> MONTSECHIA = registerBlock("montsechia", () -> new FlowerBlock(MobEffects.UNLUCK, 12.0F,BlockBehaviour.Properties.of().mapColor(MapColor.PLANT)
+    public static final Supplier<Block> MONTSECHIA = registerBlock("montsechia", () -> new FlowerBlock(MobEffects.UNLUCK, 12.0F, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT)
             .lightLevel((state) -> {
                 return 14;
             }).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
 
-    public static  final Supplier<Block> POTTED_MONTSECHIA = registerBlockWithoutBlockItem("potted_montsechia", () -> createFlowerPotBlock(MONTSECHIA.get()));
-    public static  final Supplier<Block> SAGARIA = registerBlock("sagaria", () -> new FlowerBlock(MobEffects.LUCK, 12.0F,BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
-     return 14;
+    public static final Supplier<Block> POTTED_MONTSECHIA = registerBlockWithoutBlockItem("potted_montsechia", () -> createFlowerPotBlock(MONTSECHIA.get()));
+    public static final Supplier<Block> SAGARIA = registerBlock("sagaria", () -> new FlowerBlock(MobEffects.LUCK, 12.0F, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
+        return 14;
     }).instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
 
-    public static  final Supplier<Block> POTTED_SAGARIA = registerBlockWithoutBlockItem("potted_sagaria", () -> createFlowerPotBlock(SAGARIA.get()));
+    public static final Supplier<Block> POTTED_SAGARIA = registerBlockWithoutBlockItem("potted_sagaria", () -> createFlowerPotBlock(SAGARIA.get()));
 
-    public static  final Supplier<Block> ROSE = registerBlock("rose", () -> new FlowerBlock(MobEffects.LUCK, 12.0F,BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
+    public static final Supplier<Block> ROSE = registerBlock("rose", () -> new FlowerBlock(MobEffects.LUCK, 12.0F, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
         return 0;
     }).instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
 
-    public static  final Supplier<Block> POTTED_ROSE = registerBlockWithoutBlockItem("potted_rose", () -> createFlowerPotBlock(ROSE.get()));
+    public static final Supplier<Block> POTTED_ROSE = registerBlockWithoutBlockItem("potted_rose", () -> createFlowerPotBlock(ROSE.get()));
 
 
-    public static  final Supplier<Block> RAFFLESIA = registerBlock("rafflesia", () -> new RafflesiaBlock(BlockBehaviour.Properties.of().mapColor(MapColor.CRIMSON_STEM).instabreak().noCollission().lightLevel((state) -> {
-     return 12;
+    public static final Supplier<Block> RAFFLESIA = registerBlock("rafflesia", () -> new RafflesiaBlock(BlockBehaviour.Properties.of().mapColor(MapColor.CRIMSON_STEM).instabreak().noCollission().lightLevel((state) -> {
+        return 12;
     }).sound(SoundType.SPORE_BLOSSOM).pushReaction(PushReaction.DESTROY)));
 
     public static final Supplier<Block> GOURD_VINE = registerBlock("gourd_vine", () -> new GourdVineBlock(BlockBehaviour.Properties.of().replaceable().noCollission()
@@ -223,7 +222,7 @@ Blocks ref;
             })));
 
     public static final Supplier<Block> BIG_WHIRLIWEED = registerBlock("big_whirliweed", () -> new TallFlowerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<Block> WHIRLIWEED = registerBlock("whirliweed", () -> new FlowerBlock(MobEffects.POISON, 12.0F,BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
+    public static final Supplier<Block> WHIRLIWEED = registerBlock("whirliweed", () -> new FlowerBlock(MobEffects.POISON, 12.0F, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
 
     public static final Supplier<Block> CLAYSTONE = registerBlock("claystone", () -> new Block(BlockBehaviour.Properties.ofLegacyCopy(DIRT).strength(1.0F, 3.0F).sound(SoundType.PACKED_MUD)));
     public static final Supplier<Block> COARSE_CLAYSTONE = registerBlock("coarse_claystone", () -> new Block(BlockBehaviour.Properties.ofLegacyCopy(DIRT).strength(1.0F, 3.0F).sound(SoundType.PACKED_MUD)));
@@ -368,10 +367,10 @@ Blocks ref;
             new WallBlock(BlockBehaviour.Properties.ofFullCopy(BGBlocks.MALACHITE.get()).strength(2.0f)));
 
     public static final Supplier<Block> PRIMORDIAL_VENT = registerBlock("primordial_vent", () ->
-                                    new PrimordialVentBlock(true, BlockBehaviour.Properties.of()
-    .mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.SUSPICIOUS_GRAVEL).lightLevel((state) -> {
-                                                return 1;
-                                            }).noOcclusion().ignitedByLava()));
+            new PrimordialVentBlock(true, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.SUSPICIOUS_GRAVEL).lightLevel((state) -> {
+                        return 1;
+                    }).noOcclusion().ignitedByLava()));
 
     public static final Supplier<Block> PRIMORDIAL_VENTSTONE = registerBlock("primordial_ventstone", () ->
             new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WATER).instrument(NoteBlockInstrument.XYLOPHONE).requiresCorrectToolForDrops()
@@ -442,17 +441,17 @@ Blocks ref;
             .replaceable().noCollission().instabreak().sound(SoundType.WET_GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
 
 
-// Start of Blemish biome blocksets!
+    // Start of Blemish biome blocksets!
     public static final Supplier<Block> BLEMISH = registerBlock("blemish", () -> new BlemishBlock(BlockBehaviour.Properties.of().mapColor(MapColor.ICE).instabreak().sound(SoundType.WET_GRASS)));
     public static final Supplier<Block> BLEMISH_CATALYST = registerBlock("blemish_catalyst", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.ICE).instabreak().sound(SoundType.WET_GRASS)));
     public static final Supplier<Block> BLEMISH_VEIN = registerBlock("blemish_vein", () -> new BlemishVeinBlock(BlockBehaviour.Properties.of().mapColor(MapColor.ICE).forceSolidOn().noCollission().strength(0.2F).sound(SoundType.SCULK_VEIN).pushReaction(PushReaction.DESTROY)));
 
 
-// Start of Amber Desert blocksets!
+    // Start of Amber Desert blocksets!
     public static final Supplier<Block> AMBER_SAND = registerBlock("amber_sand", () ->
-        new Block(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).strength(0.35F)
-                .sound(SoundType.GRAVEL)));
-    
+            new Block(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).strength(0.35F)
+                    .sound(SoundType.GRAVEL)));
+
     public static final Supplier<Block> AMBER_SANDSTONE = registerBlock("amber_sandstone", () ->
             new Block(BlockBehaviour.Properties.of().mapColor(MapColor.RAW_IRON).strength(0.99F)
                     .sound(SoundType.STONE)));
@@ -496,11 +495,11 @@ Blocks ref;
 
 
     public static final Supplier<Block> AMBER = registerBlock("amber", () ->
-        new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).strength(1.0F)
-                .sound(SoundType.GLASS).noOcclusion().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never).isSuffocating(Blocks::never)
-                .isViewBlocking(Blocks::never).lightLevel((state) -> {
-                    return 4;
-                })));
+            new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).strength(1.0F)
+                    .sound(SoundType.GLASS).noOcclusion().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never).isSuffocating(Blocks::never)
+                    .isViewBlocking(Blocks::never).lightLevel((state) -> {
+                        return 4;
+                    })));
 
     public static final Supplier<Block> AMBER_BRICKS = registerBlock("amber_bricks", () -> new Block(
             BlockBehaviour.Properties.of().sound(SoundType.GLASS).mapColor(MapColor.COLOR_ORANGE).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F,
@@ -569,8 +568,8 @@ Blocks ref;
     public static final Supplier<Block> CHANTRELLE = registerBlockWithoutBlockItem("chantrelle", () -> new ChantrelleCropBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)
             .pushReaction(PushReaction.DESTROY).lightLevel((state) -> {
-        return 6;
-    })));
+                return 6;
+            })));
 
 
     public static final Supplier<Block> AMARANTH_BLOCK = registerBlock("bale_block", () -> new HayBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).instrument(NoteBlockInstrument.BANJO).strength(0.5F).sound(SoundType.GRASS)));
@@ -666,32 +665,32 @@ Blocks ref;
                 return 1;
             })));
 
-    public static  final  Supplier<Block> ORANGE_FUNGI_VINES = registerBlockWithoutBlockItem("orange_fungi_vines", () -> new ShelfOrangeFungiVinesHeadBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> ORANGE_FUNGI_VINES = registerBlockWithoutBlockItem("orange_fungi_vines", () -> new ShelfOrangeFungiVinesHeadBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).randomTicks().noCollission().lightLevel((state) -> {
                 return 1;
             }).instabreak()
             .sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY)));
-    public static  final  Supplier<Block> ORANGE_FUNGI_PLANT = registerBlockWithoutBlockItem("orange_fungi_vines_plant", () -> new ShelfOrangeFungiVinesBodyBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> ORANGE_FUNGI_PLANT = registerBlockWithoutBlockItem("orange_fungi_vines_plant", () -> new ShelfOrangeFungiVinesBodyBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
                 return 1;
             }).instabreak().sound(SoundType.CAVE_VINES)
             .pushReaction(PushReaction.DESTROY)));
-    public static  final  Supplier<Block> PINK_FUNGI_VINES = registerBlockWithoutBlockItem("pink_fungi_vines", () -> new ShelfPinkFungiVinesHeadBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> PINK_FUNGI_VINES = registerBlockWithoutBlockItem("pink_fungi_vines", () -> new ShelfPinkFungiVinesHeadBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).randomTicks().noCollission().lightLevel((state) -> {
                 return 1;
             }).instabreak()
             .sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY)));
-    public static  final  Supplier<Block> PINK_FUNGI_VINES_PLANT = registerBlockWithoutBlockItem("pink_fungi_vines_plant", () -> new ShelfPinkFungiVinesBodyBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> PINK_FUNGI_VINES_PLANT = registerBlockWithoutBlockItem("pink_fungi_vines_plant", () -> new ShelfPinkFungiVinesBodyBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
                 return 1;
             }).instabreak().sound(SoundType.CAVE_VINES)
             .pushReaction(PushReaction.DESTROY)));
-    public static  final  Supplier<Block> PURPLE_FUNGI_VINES = registerBlockWithoutBlockItem("purple_fungi_vines", () -> new ShelfPurpleFungiVinesHeadBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> PURPLE_FUNGI_VINES = registerBlockWithoutBlockItem("purple_fungi_vines", () -> new ShelfPurpleFungiVinesHeadBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).randomTicks().noCollission().lightLevel((state) -> {
                 return 1;
             }).instabreak()
             .sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY)));
-    public static  final Supplier<Block> PURPLE_FUNGI_VINES_PLANT = registerBlockWithoutBlockItem("purple_fungi_vines_plant", () -> new ShelfPurpleFungiVinesBodyBlock(BlockBehaviour.Properties.of()
+    public static final Supplier<Block> PURPLE_FUNGI_VINES_PLANT = registerBlockWithoutBlockItem("purple_fungi_vines_plant", () -> new ShelfPurpleFungiVinesBodyBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.PLANT).noCollission().lightLevel((state) -> {
                 return 1;
             }).instabreak().sound(SoundType.CAVE_VINES)
@@ -708,91 +707,58 @@ Blocks ref;
                     .strength(1.5F, 6.0F).lightLevel((state) -> {
                         return 12;
                     })));
-    public static final Supplier<Block> AMPHORA = registerBlock("amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BLUE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> AMPHORA = registerAmphora("", MapColor.TERRACOTTA_BLUE);
 
-    public static final Supplier<Block> BLACK_AMPHORA = registerBlock("black_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BLUE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> BLACK_AMPHORA = registerAmphora("black_", MapColor.TERRACOTTA_BLUE);
+    public static final Supplier<Block> BLUE_AMPHORA = registerAmphora("blue_", MapColor.TERRACOTTA_BLUE);
 
-    public static final Supplier<Block> BLUE_AMPHORA = registerBlock("blue_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BLUE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> BROWN_AMPHORA = registerAmphora("brown_", MapColor.TERRACOTTA_BROWN);
 
-    public static final Supplier<Block> BROWN_AMPHORA = registerBlock("brown_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BROWN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> CYAN_AMPHORA = registerAmphora("cyan_", MapColor.TERRACOTTA_BROWN);
 
-    public static final Supplier<Block> CYAN_AMPHORA = registerBlock("cyan_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BROWN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> GILDED_AMPHORA = registerAmphora("gilded_", MapColor.TERRACOTTA_BROWN);
 
-    public static final Supplier<Block> GILDED_AMPHORA = registerBlock("gilded_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BROWN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> GRAY_AMPHORA = registerAmphora("gray_", MapColor.TERRACOTTA_BROWN);
+    public static final Supplier<Block> GREEN_AMPHORA = registerAmphora("green_", MapColor.TERRACOTTA_GREEN);
 
-    public static final Supplier<Block> GRAY_AMPHORA = registerBlock("gray_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_BROWN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> LIGHT_BLUE_AMPHORA = registerAmphora("light_blue_", MapColor.TERRACOTTA_GREEN);
 
-    public static final Supplier<Block> GREEN_AMPHORA = registerBlock("green_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_GREEN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> LIGHT_GRAY_AMPHORA = registerAmphora("light_gray_", MapColor.TERRACOTTA_GREEN);
 
-    public static final Supplier<Block> LIGHT_BLUE_AMPHORA = registerBlock("light_blue_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_GREEN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> LIME_AMPHORA = registerAmphora("lime_", MapColor.TERRACOTTA_LIGHT_GREEN);
 
-    public static final Supplier<Block> LIGHT_GRAY_AMPHORA = registerBlock("light_gray_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_GREEN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> MAGENTA_AMPHORA = registerAmphora("magenta_", MapColor.TERRACOTTA_MAGENTA);
 
-    public static final Supplier<Block> LIME_AMPHORA = registerBlock("lime_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> ORANGE_AMPHORA = registerAmphora("orange_", MapColor.TERRACOTTA_ORANGE);
 
-    public static final Supplier<Block> MAGENTA_AMPHORA = registerBlock("magenta_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_MAGENTA).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> PINK_AMPHORA = registerAmphora("pink_", MapColor.TERRACOTTA_PURPLE);
 
-    public static final Supplier<Block> ORANGE_AMPHORA = registerBlock("orange_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_ORANGE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> PURPLE_AMPHORA = registerAmphora("purple_", MapColor.TERRACOTTA_PURPLE);
 
-    public static final Supplier<Block> PINK_AMPHORA = registerBlock("pink_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_PURPLE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> RED_AMPHORA = registerAmphora("red_", MapColor.TERRACOTTA_PURPLE);
 
-    public static final Supplier<Block> PURPLE_AMPHORA = registerBlock("purple_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_PURPLE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> WHITE_AMPHORA = registerAmphora("white_", MapColor.TERRACOTTA_WHITE);
 
-    public static final Supplier<Block> RED_AMPHORA = registerBlock("red_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_PURPLE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> YELLOW_AMPHORA = registerAmphora("yellow_", MapColor.TERRACOTTA_WHITE);
 
-    public static final Supplier<Block> WHITE_AMPHORA = registerBlock("white_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_WHITE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    public static final Supplier<Block> BROKEN_VERDIGRIS_COG = registerVerdigrisCog(BaseVerdigrisCogBlock.VerdigrisStage.BROKEN);
+    public static final Supplier<Block> RAMSHACKLED_VERDIGRIS_COG = registerVerdigrisCog(BaseVerdigrisCogBlock.VerdigrisStage.RAMSHACKLED);
+    public static final Supplier<Block> TARNISHED_VERDIGRIS_COG = registerVerdigrisCog(BaseVerdigrisCogBlock.VerdigrisStage.TARNISHED);
+    public static final Supplier<Block> PRISTINE_VERDIGRIS_COG = registerVerdigrisCog(BaseVerdigrisCogBlock.VerdigrisStage.PRISTINE);
 
-    public static final Supplier<Block> YELLOW_AMPHORA = registerBlock("yellow_amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.TERRACOTTA_WHITE).strength(0.0F, 0.0F)
-            .pushReaction(PushReaction.DESTROY).noOcclusion()));
+    private static Supplier<Block> registerVerdigrisCog(BaseVerdigrisCogBlock.VerdigrisStage verdigrisStage) {
+        return registerBlock(verdigrisStage.name().toLowerCase() + "_verdigris_cog", () ->
+                new BaseVerdigrisCogBlock(verdigrisStage, BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).replaceable().noCollission().randomTicks().strength(0.2F).sound(SoundType.METAL).ignitedByLava().pushReaction(PushReaction.DESTROY)));
+    }
 
-    public static final Supplier<Block> BROKEN_VERDIGRIS_COG = registerBlock("broken_verdigris_cog", () ->
-            new BaseVerdigrisCogBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).replaceable().noCollission().randomTicks().strength(0.2F).sound(SoundType.METAL).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<Block> RAMSHACKLED_VERDIGRIS_COG = registerBlock("ramshackled_verdigris_cog", () ->
-            new BaseVerdigrisCogBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).replaceable().noCollission().randomTicks().strength(0.2F).sound(SoundType.METAL).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<Block> TARNISHED_VERDIGRIS_COG = registerBlock("tarnished_verdigris_cog", () ->
-            new BaseVerdigrisCogBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).replaceable().noCollission().randomTicks().strength(0.2F).sound(SoundType.METAL).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-    public static final Supplier<Block> PRISTINE_VERDIGRIS_COG = registerBlock("pristine_verdigris_cog", () ->
-            new BaseVerdigrisCogBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).replaceable().noCollission().randomTicks().strength(0.2F).sound(SoundType.METAL).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-
-
-
-    private static Supplier<Block> registerBlock(String name,  Supplier<Block> block) {
+    private static Supplier<Block> registerBlock(String name, Supplier<Block> block) {
         return JinxedRegistryHelper.registerBlock(Bygone.MOD_ID, name, true, block);
+    }
+
+    private static Supplier<Block> registerAmphora(String name, MapColor mapColor) {
+        return registerBlock(name + "amphora", () -> new AmphoraBlock(BlockBehaviour.Properties.of()
+                .mapColor(mapColor).strength(0.0F, 0.0F)
+                .pushReaction(PushReaction.DESTROY).noOcclusion()));
     }
 
 
@@ -804,6 +770,7 @@ Blocks ref;
     public static Block createFlowerPotBlock(Block flower) {
         return new FlowerPotBlock(flower, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY));
     }
-    
-    public static void init() {}
+
+    public static void init() {
+    }
 }

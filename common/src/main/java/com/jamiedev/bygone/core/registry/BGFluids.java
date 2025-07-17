@@ -4,16 +4,21 @@ import com.jamiedev.bygone.Bygone;
 import com.jamiedev.bygone.common.block.fluids.BronzeFluid;
 import com.kekecreations.jinxedlib.core.util.JinxedRegistryHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.function.Supplier;
+
+import static net.minecraft.world.item.Items.BUCKET;
 
 public class BGFluids
 {
 
     public static Supplier<Fluid> BRONZE_STILL = registerFluid("bronze_still", BronzeFluid.Source::new);
     public static Supplier<Fluid> BRONZE_FLOWING = registerFluid("bronze_flowing", BronzeFluid.Flowing::new);
+    public static final Supplier<Item> BRONZE_BUCKET = BGItems.registerItem("bronze_bucket", () -> new BucketItem(BGFluids.BRONZE_STILL.get(), (new Item.Properties()).craftRemainder(BUCKET).stacksTo(1)));
 
     public static Supplier<Fluid> registerFluid(String name, Supplier<Fluid> supplier) {
         return JinxedRegistryHelper.register(BuiltInRegistries.FLUID, Bygone.MOD_ID, name, supplier);

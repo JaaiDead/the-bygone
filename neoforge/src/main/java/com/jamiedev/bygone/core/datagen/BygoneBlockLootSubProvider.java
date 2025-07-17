@@ -23,6 +23,11 @@ public class BygoneBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(BGBlocks.POLISHED_BYSTONE_STAIRS.get());
         dropSelf(BGBlocks.POLISHED_BYSTONE_WALL.get());
 
+        dropSelf(BGBlocks.BROKEN_VERDIGRIS_COG.get());
+        dropSelf(BGBlocks.TARNISHED_VERDIGRIS_COG.get());
+        dropSelf(BGBlocks.PRISTINE_VERDIGRIS_COG.get());
+        dropSelf(BGBlocks.RAMSHACKLED_VERDIGRIS_COG.get());
+
         dropSelf(BGBlocks.POLISHED_BYSTONE_BRICK.get());
         dropSelf(BGBlocks.POLISHED_BYSTONE_BRICK_SLAB.get());
         dropSelf(BGBlocks.POLISHED_BYSTONE_BRICK_STAIRS.get());
