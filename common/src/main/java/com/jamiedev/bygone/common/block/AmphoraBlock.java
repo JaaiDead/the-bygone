@@ -48,6 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
+
 public class AmphoraBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<AmphoraBlock> CODEC = simpleCodec(AmphoraBlock::new);
     public static final ResourceLocation SHERDS_DYNAMIC_DROP_ID = ResourceLocation.withDefaultNamespace("sherds");
@@ -92,24 +93,22 @@ public class AmphoraBlock extends BaseEntityBlock implements SimpleWaterloggedBl
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         BlockEntity itemStack1 = level.getBlockEntity(pos);
         if (itemStack1 instanceof AmphoraBlockEntity AmphoraBlockEntity) {
-            if (level.isClientSide) {
-                return ItemInteractionResult.CONSUME;
-            } else {
-                if (stack.is(Items.WATER_BUCKET) && state.getValue(WATER_LEVEL) < 8) {
-                    AmphoraBlockEntity.wobble(com.jamiedev.bygone.common.block.entity.AmphoraBlockEntity.WobbleStyle.POSITIVE);
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    updateWaterLevel(level, state.getValue(WATER_LEVEL) + 1, state, pos);
-                    if (!player.hasInfiniteMaterials())
-                        player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-                    return ItemInteractionResult.SUCCESS;
-                } else if (stack.is(Items.BUCKET) && state.getValue(WATER_LEVEL) > 0) {
-                    AmphoraBlockEntity.wobble(com.jamiedev.bygone.common.block.entity.AmphoraBlockEntity.WobbleStyle.POSITIVE);
-                    updateWaterLevel(level, state.getValue(WATER_LEVEL) - 1, state, pos);
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    if (!player.hasInfiniteMaterials())
-                        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.WATER_BUCKET)));
-                    return ItemInteractionResult.SUCCESS;
-                }
+            if (stack.is(Items.WATER_BUCKET) && state.getValue(WATER_LEVEL) < 8) {
+                AmphoraBlockEntity.wobble(com.jamiedev.bygone.common.block.entity.AmphoraBlockEntity.WobbleStyle.POSITIVE);
+                doWaterParticles(level, pos);
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                updateWaterLevel(level, state.getValue(WATER_LEVEL) + 1, state, pos);
+                if (!player.hasInfiniteMaterials())
+                    player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                return ItemInteractionResult.SUCCESS;
+            } else if (stack.is(Items.BUCKET) && state.getValue(WATER_LEVEL) > 0) {
+                AmphoraBlockEntity.wobble(com.jamiedev.bygone.common.block.entity.AmphoraBlockEntity.WobbleStyle.POSITIVE);
+                doWaterParticles(level, pos);
+                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                updateWaterLevel(level, state.getValue(WATER_LEVEL) - 1, state, pos);
+                if (!player.hasInfiniteMaterials())
+                    player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(Items.WATER_BUCKET)));
+                return ItemInteractionResult.SUCCESS;
             }
         } else {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
@@ -120,6 +119,18 @@ public class AmphoraBlock extends BaseEntityBlock implements SimpleWaterloggedBl
     public static void updateWaterLevel(Level level, int waterLevel, BlockState state, BlockPos pos) {
         BlockState newState = state.setValue(WATER_LEVEL, Integer.valueOf(waterLevel));
         level.setBlockAndUpdate(pos, newState);
+    }
+
+    public static void doWaterParticles(Level level, BlockPos pos) {
+        if (level.isClientSide) {
+            level.addParticle(ParticleTypes.SPLASH,
+                    pos.getX() + (double) level.random.nextFloat(),
+                    pos.getY() + 1,
+                    pos.getZ() + (double) level.random.nextFloat(),
+                    0.0,
+                    0.0,
+                    0.0);
+        }
     }
 
 

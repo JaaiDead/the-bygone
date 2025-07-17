@@ -117,8 +117,8 @@ public class AmphoraBlockEntity extends BlockEntity implements RandomizableConta
 
     protected void applyImplicitComponents(BlockEntity.DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
-        this.decorations = (PotDecorations) componentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
-        this.item = ((ItemContainerContents) componentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)).copyOne();
+        this.decorations = componentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
+        this.item = componentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyOne();
     }
 
     public void removeComponentsFromTag(CompoundTag tag) {

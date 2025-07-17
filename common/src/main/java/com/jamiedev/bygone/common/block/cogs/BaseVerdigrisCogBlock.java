@@ -55,7 +55,6 @@ public class BaseVerdigrisCogBlock extends PoweredBlock {
     private final ImmutableMap shapesCache;
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public final VerdigrisStage verdigrisStage;
-    public static final EnumProperty<VerdigrisStage> VERDIGRIS_STAGE = EnumProperty.create("verdigris_stage", VerdigrisStage.class);
     public static final IntegerProperty DELAY;
     public static final BooleanProperty POWERED;
 
@@ -66,7 +65,7 @@ public class BaseVerdigrisCogBlock extends PoweredBlock {
     public BaseVerdigrisCogBlock(VerdigrisStage stage, BlockBehaviour.Properties properties) {
         super(properties);
         this.verdigrisStage = stage;
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(UP, false).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(VERDIGRIS_STAGE, this.verdigrisStage).setValue(POWERED, true).setValue(DELAY, Integer.valueOf(1)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(UP, false).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(POWERED, true).setValue(DELAY, Integer.valueOf(1)));
         this.shapesCache = ImmutableMap.copyOf((Map) this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), BaseVerdigrisCogBlock::calculateShape)));
     }
 
@@ -83,13 +82,14 @@ public class BaseVerdigrisCogBlock extends PoweredBlock {
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.tick(state, level, pos, random);
-        var newState = state.setValue(POWERED, !state.getValue(POWERED));
+        var newState = verdigrisStage.shouldPower ? state.setValue(POWERED, !state.getValue(POWERED)) : state.setValue(POWERED, false);
         level.setBlockAndUpdate(pos, newState);
-        if (random.nextFloat() < 0.0001F) {
+        if (random.nextFloat() < 0.001F) {
             var replaceState = nextBLockState(state, level, pos);
             level.setBlockAndUpdate(pos, replaceState);
         }
-        level.scheduleTick(pos, this, verdigrisStage.degradationAmount, TickPriority.VERY_HIGH);
+        if (verdigrisStage.shouldPower)
+            level.scheduleTick(pos, this, verdigrisStage.degradationAmount, TickPriority.VERY_HIGH);
     }
 
     public BlockState nextBLockState(BlockState oldState, Level level, BlockPos pos) {
@@ -312,7 +312,7 @@ public class BaseVerdigrisCogBlock extends PoweredBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(UP, NORTH, EAST, SOUTH, WEST, VERDIGRIS_STAGE, POWERED, DELAY, FACING);
+        builder.add(UP, NORTH, EAST, SOUTH, WEST, POWERED, DELAY, FACING);
     }
 
     /**
@@ -375,16 +375,22 @@ public class BaseVerdigrisCogBlock extends PoweredBlock {
     public enum VerdigrisStage implements StringRepresentable {
         PRISTINE("pristine", 10),
         TARNISHED("tarnished", 30),
-        RAMSHACKLED("ramshackled", 40),
-        BROKEN("broken", 60);
+        RAMSHACKLED("ramshackled", 60),
+        BROKEN("broken", 0, false);
 
         public static final Codec<VerdigrisStage> CODEC = StringRepresentable.fromEnum(VerdigrisStage::values);
         private String stage;
         private int degradationAmount;
+        private boolean shouldPower;
 
         private VerdigrisStage(String stage, int degradationAmount) {
+            this(stage, degradationAmount, true);
+        }
+
+        private VerdigrisStage(String stage, int degradationAmount, boolean shouldPower) {
             this.stage = stage;
             this.degradationAmount = degradationAmount;
+            this.shouldPower = shouldPower;
         }
 
         @Override
