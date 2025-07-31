@@ -67,7 +67,6 @@ public class BygoneNeoForge {
     void setup(FMLCommonSetupEvent event) {
         Bygone.registerStrippables();
         Bygone.addFlammable();
-        JamiesModPortalsNeoForge.init();
     }
 
     void addValidBlocks(BlockEntityTypeAddBlocksEvent event) {
