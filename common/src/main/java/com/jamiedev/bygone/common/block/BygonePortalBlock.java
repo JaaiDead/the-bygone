@@ -4,19 +4,14 @@ import com.jamiedev.bygone.common.block.entity.BygonePortalBlockEntity;
 import com.jamiedev.bygone.common.util.PortalUtils;
 import com.jamiedev.bygone.core.registry.BGBlocks;
 import com.jamiedev.bygone.core.registry.BGDimensions;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
-import net.kyrptonaught.customportalapi.CustomPortalApiRegistry;
-import net.kyrptonaught.customportalapi.CustomPortalBlock;
-import net.kyrptonaught.customportalapi.portal.frame.PortalFrameTester;
-import net.kyrptonaught.customportalapi.util.CustomPortalHelper;
-import net.kyrptonaught.customportalapi.util.PortalLink;
 
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.item.ItemStack;
@@ -29,16 +24,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.levelgen.feature.EndPlatformFeature;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.portal.PortalShape;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -101,39 +95,42 @@ public class BygonePortalBlock extends Block implements Portal
         }
     }
 
-    @javax.annotation.Nullable
-    private DimensionTransition getExitPortal(
+    public static Pair<BlockPos, Boolean> findClosestPortalPosition(BlockPos exitPos, ServerLevel level) {
+        var height = level.getBlockFloorHeight(exitPos);
+        exitPos = exitPos.atY((int)height);
+        var valid = true;
+            for (var pos : BlockPos.betweenClosed(exitPos, exitPos.relative(Direction.Axis.X, 4).relative(Direction.Axis.Z, 4))) {
+                if (level.getBlockState(pos).is(BGBlocks.BYGONE_PORTAL.get()) || level.getBlockState(pos).is(BGBlocks.BYGONE_PORTAL_FRAME.get())) {
+                    valid = false;
+                    break;
+                }
+            }
+        if (valid) {
+            return Pair.of(exitPos, true);
+        } else {
+            return Pair.of(exitPos, false);
+        }
+    }
+
+    private @NotNull DimensionTransition getExitPortal(
             ServerLevel level, Entity entity, BlockPos pos, BlockPos exitPos, boolean isNether, WorldBorder worldBorder
     ) {
-        Optional<BlockPos> optional = level.getPortalForcer().findClosestPortalPosition(exitPos, isNether, worldBorder);
-        BlockUtil.FoundRectangle blockutil$foundrectangle;
+        Pair<BlockPos, Boolean> alreadyHasPortal = findClosestPortalPosition(exitPos, level);
+        exitPos = alreadyHasPortal.getFirst();
         DimensionTransition.PostDimensionTransition dimensiontransition$postdimensiontransition;
 
-        if (optional.isPresent()) {
-            BlockPos blockpos = optional.get();
-            BlockState blockstate = level.getBlockState(blockpos);
-            blockutil$foundrectangle = BlockUtil.getLargestRectangleAround(
-                    blockpos,
-                    blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS),
-                    21,
-                    Direction.Axis.Y,
-                    21,
-                    p_351970_ -> level.getBlockState(p_351970_) == blockstate
-            );
+        if (alreadyHasPortal.getSecond()) {
             dimensiontransition$postdimensiontransition = DimensionTransition.PLAY_PORTAL_SOUND;
-            PortalUtils.createPortal(level, blockpos, BGBlocks.BYGONE_PORTAL_FRAME.get().defaultBlockState().setValue(BygonePortalFrameBlock.EYE, true),  Direction.Axis.X);
+            PortalUtils.createPortal(level, exitPos);
         } else {
-
-            blockutil$foundrectangle = new BlockUtil.FoundRectangle(pos, 3, 3);
             dimensiontransition$postdimensiontransition = DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET);
-            PortalUtils.createPortal(level, pos, BGBlocks.BYGONE_PORTAL_FRAME.get().defaultBlockState().setValue(BygonePortalFrameBlock.EYE, true), Direction.Axis.X);
         }
 
-        return getDimensionTransitionFromExit(entity, pos, blockutil$foundrectangle, level, dimensiontransition$postdimensiontransition);
+        return getDimensionTransitionFromExit(entity, pos, level, dimensiontransition$postdimensiontransition);
     }
 
     private static DimensionTransition getDimensionTransitionFromExit(
-            Entity entity, BlockPos pos, BlockUtil.FoundRectangle rectangle, ServerLevel level, DimensionTransition.PostDimensionTransition postDimensionTransition
+            Entity entity, BlockPos pos, ServerLevel level, DimensionTransition.PostDimensionTransition postDimensionTransition
     ) {
         BlockState blockstate = entity.level().getBlockState(pos);
         Direction.Axis direction$axis;
@@ -150,7 +147,7 @@ public class BygonePortalBlock extends Block implements Portal
         }
 
         return createDimensionTransition(
-                level, rectangle, direction$axis, vec3, entity, entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), postDimensionTransition
+                level, direction$axis, pos ,vec3, entity, entity.getDeltaMovement(), entity.getYRot(), entity.getXRot(), postDimensionTransition
         );
     }
 
@@ -160,10 +157,15 @@ public class BygonePortalBlock extends Block implements Portal
         }
     }
 
+    @Override
+    public int getPortalTransitionTime(ServerLevel level, Entity entity) {
+        return 40;
+    }
+
     private static DimensionTransition createDimensionTransition(
             ServerLevel level,
-            BlockUtil.FoundRectangle rectangle,
             Direction.Axis axis,
+            BlockPos exitPos,
             Vec3 offset,
             Entity entity,
             Vec3 speed,
@@ -171,11 +173,10 @@ public class BygonePortalBlock extends Block implements Portal
             float xRot,
             DimensionTransition.PostDimensionTransition postDimensionTransition
     ) {
-        BlockPos blockpos = rectangle.minCorner;
-        BlockState blockstate = level.getBlockState(blockpos);
+        BlockState blockstate = level.getBlockState(exitPos);
         Direction.Axis direction$axis = blockstate.getOptionalValue(BlockStateProperties.HORIZONTAL_AXIS).orElse(Direction.Axis.X);
-        double d0 = (double)rectangle.axis1Size;
-        double d1 = (double)rectangle.axis2Size;
+        double d0 = 3;
+        double d1 = 3;
         EntityDimensions entitydimensions = entity.getDimensions(entity.getPose());
         int i = axis == direction$axis ? 0 : 90;
         Vec3 vec3 = axis == direction$axis ? speed : new Vec3(speed.z, speed.y, -speed.x);
@@ -183,7 +184,7 @@ public class BygonePortalBlock extends Block implements Portal
         double d3 = (d1 - (double)entitydimensions.height()) * offset.y();
         double d4 = 0.5 + offset.z();
         boolean flag = direction$axis == Direction.Axis.X;
-        Vec3 vec31 = new Vec3((double)blockpos.getX() + (flag ? d2 : d4), (double)blockpos.getY() + d3, (double)blockpos.getZ() + (flag ? d4 : d2));
+        Vec3 vec31 = new Vec3((double) exitPos.getX() + (flag ? d2 : d4), (double) exitPos.getY() + d3, (double) exitPos.getZ() + (flag ? d4 : d2));
         Vec3 vec32 = PortalShape.findCollisionFreePosition(vec31, level, entity, entitydimensions);
         return new DimensionTransition(level, vec32, vec3, yRot + (float)i, xRot, postDimensionTransition);
     }

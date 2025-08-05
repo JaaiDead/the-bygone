@@ -1,5 +1,6 @@
 package com.jamiedev.bygone.common.util;
 
+import com.jamiedev.bygone.common.block.BygonePortalFrameBlock;
 import com.jamiedev.bygone.core.registry.BGBlocks;
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
@@ -17,24 +18,31 @@ import java.util.Optional;
 
 public final class PortalUtils {
 
-    public static void createPortal(Level world, BlockPos pos, BlockState frameBlock, Direction.Axis axis) {
-        for(int i = -1; i < 3; ++i) {
+    public static void createPortal(Level world, BlockPos pos) {
+        BlockState frameBlock = BGBlocks.BYGONE_PORTAL_FRAME.get().defaultBlockState().setValue(BygonePortalFrameBlock.EYE, true);
+        BlockState landingblock = Blocks.MOSS_BLOCK.defaultBlockState();
+
+        for(int i = 0; i < 3; ++i) {
             world.setBlockAndUpdate(pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, -1), frameBlock);
             world.setBlockAndUpdate(pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, 2), frameBlock);
             world.setBlockAndUpdate(pos.relative(Direction.Axis.Z, i).relative(Direction.Axis.X, -1), frameBlock);
             world.setBlockAndUpdate(pos.relative(Direction.Axis.Z, i).relative(Direction.Axis.X, 2), frameBlock);
+
+            world.setBlockAndUpdate(pos.relative(Direction.Axis.X, 3).relative(Direction.Axis.Z, i), frameBlock);
+            world.setBlockAndUpdate(pos.relative(Direction.Axis.Z, 3).relative(Direction.Axis.X, i), frameBlock);
         }
 
-        for(int i = 0; i < 2; ++i) {
-            placeLandingPad(world, pos.relative(Direction.Axis.X, i).below(), frameBlock);
-            placeLandingPad(world, pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, 1).below(), frameBlock);
+        for(int i = 0; i < 3; ++i) {
+            placeLandingPad(world, pos.relative(Direction.Axis.X, i).below(), landingblock);
+            placeLandingPad(world, pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, 1).below(), landingblock);
+            placeLandingPad(world, pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, 2).below(), landingblock);
             fillAirAroundPortal(world, pos.relative(Direction.Axis.X, i).above());
             fillAirAroundPortal(world, pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, 1).above());
             fillAirAroundPortal(world, pos.relative(Direction.Axis.X, i).above(2));
             fillAirAroundPortal(world, pos.relative(Direction.Axis.X, i).relative(Direction.Axis.Z, 1).above(2));
         }
 
-        BlockPos.betweenClosed(pos, pos.relative(Direction.Axis.X, 3).relative(Direction.Axis.Z, 3)).forEach((blockPos) -> world.setBlock(blockPos, BGBlocks.BYGONE_PORTAL.get().defaultBlockState(), 18));    }
+        BlockPos.betweenClosed(pos, pos.relative(Direction.Axis.X, 2).relative(Direction.Axis.Z, 2)).forEach((blockPos) -> world.setBlock(blockPos, BGBlocks.BYGONE_PORTAL.get().defaultBlockState(), 18));    }
 
     private static void placeLandingPad(Level world, BlockPos pos, BlockState frameBlock) {
         if (!world.getBlockState(pos).isSolid())

@@ -2,8 +2,16 @@ package com.jamiedev.bygone;
 
 
 import com.jamiedev.bygone.client.BygoneClientNeoForge;
+import com.jamiedev.bygone.common.util.PortalUtils;
 import com.jamiedev.bygone.core.datagen.BygoneDataGenerator;
 import com.jamiedev.bygone.core.registry.AttachmentTypesNeoForge;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.tree.ArgumentCommandNode;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.commands.arguments.coordinates.WorldCoordinate;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +22,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -40,6 +49,15 @@ public class BygoneNeoForge {
         eventBus.addListener(this::addValidBlocks);
         NeoForge.EVENT_BUS.addListener(this::entityTick);
         NeoForge.EVENT_BUS.addListener(this::damageEvent);
+        NeoForge.EVENT_BUS.addListener(this::debugCommands);
+    }
+
+    void debugCommands(RegisterCommandsEvent event) {
+        event.getDispatcher().register(Commands.literal("debugportal").then(Commands.argument("pos", BlockPosArgument.blockPos()).executes(args -> {
+            PortalUtils.createPortal(args.getSource().getLevel(), BlockPosArgument.getBlockPos(args, "pos"));
+
+            return 0;
+        })));
     }
 
     //
